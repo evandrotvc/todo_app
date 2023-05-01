@@ -4,10 +4,9 @@ RSpec.describe ItemsController do
   let(:json) { response.parsed_body }
   let!(:todo) { create(:todo) }
 
-
   describe 'GET /index' do
     context 'with valid parameters' do
-      let!(:items) { create_list(:item, 3, todo: todo) }
+      let!(:items) { create_list(:item, 3, todo:) }
 
       let(:do_request) do
         get :index, params: { todo_id: todo.id }, as: :json
@@ -16,6 +15,7 @@ RSpec.describe ItemsController do
       before { do_request }
 
       it 'must to return all documents' do
+        items
         expect(response).to have_http_status(:ok)
 
         expect(json['items']).should_not be_nil
