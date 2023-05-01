@@ -12,7 +12,7 @@ class TodosController < ApplicationController
   end
 
   def show
-    render status: :ok, json: @todo
+    render :show, status: :ok
   end
 
   def new
