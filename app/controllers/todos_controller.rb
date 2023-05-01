@@ -32,7 +32,6 @@ class TodosController < ApplicationController
     end
   
     def update
-      byebug
       if @todo.update(todo_params)
         render json: @todo, status: :ok
       else
