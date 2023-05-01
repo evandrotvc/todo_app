@@ -1,4 +1,3 @@
-
 class Item < ApplicationRecord
   belongs_to :todo
 
@@ -8,4 +7,3 @@ class Item < ApplicationRecord
     pending: 'pending', finished: 'finished', canceled: 'canceled'
   }, _default: :pending
 end
-  
