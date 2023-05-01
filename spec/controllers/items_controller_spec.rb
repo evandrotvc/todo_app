@@ -17,7 +17,7 @@ RSpec.describe ItemsController do
 
       it 'must to return all documents' do
         expect(response).to have_http_status(:ok)
-        byebug
+
         expect(json['items']).should_not be_nil
       end
     end
@@ -42,27 +42,27 @@ RSpec.describe ItemsController do
     end
   end
 
-#   describe 'PUT /create' do
-#     context 'with valid parameters' do
-#       let!(:todo) { create(:todo, title: 'study') }
+  describe 'PUT /update' do
+    context 'with valid parameters' do
+      let!(:item) { create(:item, description: 'study', todo:) }
 
-#       let(:params) do
-#         {
-#           title: 'read'
-#         }
-#       end
-#       let(:do_request) do
-#         put :update, params: { id: todo.id, todo: params }, as: :json
-#       end
+      let(:params) do
+        {
+          description: 'read'
+        }
+      end
+      let(:do_request) do
+        put :update, params: { todo_id: todo.id, id: item.id, item: params }, as: :json
+      end
 
-#       it 'must to created todo' do
-#         do_request
-#         expect do
-#           todo.reload
-#         end.to change(todo, :title).from('study').to('read')
+      it 'must to created todo' do
+        do_request
+        expect do
+          item.reload
+        end.to change(item, :description).from('study').to('read')
 
-#         expect(response).to have_http_status(:ok)
-#       end
-#     end
-#   end
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
 end
