@@ -3,7 +3,7 @@
 class ItemsController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :set_item,
-    only: %i[show edit update destroy]
+    only: %i[show edit update destroy done]
   before_action :set_todo
 
   def index
@@ -41,6 +41,14 @@ class ItemsController < ApplicationController
     end
   end
 
+  def done
+    if @item.update(done: item_params[:done])
+      render json: @item, status: :ok
+    else
+      render json: @item.errors, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     @item.destroy!
 
@@ -58,6 +66,6 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:description)
+    params.require(:item).permit(:description, :done)
   end
 end

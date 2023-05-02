@@ -65,4 +65,28 @@ RSpec.describe ItemsController do
       end
     end
   end
+
+  describe 'PUT /done' do
+    context 'with valid parameters' do
+      let!(:item) { create(:item, description: 'study', todo:) }
+
+      let(:params) do
+        {
+          done: true
+        }
+      end
+      let(:do_request) do
+        put :done, params: { todo_id: todo.id, id: item.id, item: params }, as: :json
+      end
+
+      it 'must to created todo' do
+        do_request
+        expect do
+          item.reload
+        end.to change(item, :done).from(false).to(true)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
 end
