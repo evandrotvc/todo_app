@@ -1,46 +1,80 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as C from './App.styles';
+import { Todo } from './types/todo';
 import { Item } from './types/Item';
 import { ListItem } from './components/ListItem';
 import { AddArea } from './components/AddArea';
+import axios from 'axios'
 
 const App = () => {
-  const [list, setList] = useState<Item[]>([
-    { id: 1, name: 'Comprar o pão na padaria', done: false },
-    { id: 2, name: 'Comprar um bolo na padaria', done: true },
-  ]);
+  const [todo, setTodo] = useState<Todo>();
+  const [items, setItem] = useState<Item[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleAddTask = (taskName: string) => {
-    let newList = [...list];
-    newList.push({
-      id: list.length + 1,
-      name: taskName,
-      done: false
-    });
-    setList(newList);
-  }
+  useEffect( () => {
+    async function getItems(){
+      const response = await axios.get(`http://localhost:3000/todos/1`);
+      debugger
+      setTodo(response.data)
+      setItem(response.data.items)
+      setLoading(true)
+    }
 
-  // Função feita para tarefinha de casa.
-  const handleTaskChange = (id: number, done: boolean) => {
-    let newList = [...list];
-    for(let i in newList) {
-      if(newList[i].id === id) {
-        newList[i].done = done;
+    getItems()
+  }, [])
+
+
+  const handleAddTask = async (taskName: string) => {
+    let newList = [...items];
+
+    const dto = {
+      item: {
+        description: taskName
       }
     }
-    setList(newList);
+
+    const response = await axios.post(`http://localhost:3000/todos/1/items`, dto);
+
+    newList.push({
+      id: response.data.id,
+      description: response.data.description,
+      done: false
+    });
+
+    setItem(newList);
+  }
+
+  const handleTaskChange = async (id: number, done: boolean) => {
+    let newList = [...items];
+
+    const dto = {
+      item: {
+        done: done
+      }
+    }
+
+    const response = await axios.put(`http://localhost:3000/todos/1/items/${id}/done`, dto);
+
+    newList.find(item => {
+      if (item.id === id){
+        item.done = done;
+      }
+      return item;
+    })
+
+    setItem(newList);
   }
 
   return (
     	<C.Container>
         <C.Area>
-          <C.Header>Lista de Tarefas</C.Header>
+          <C.Header>{todo?.title}</C.Header>
 
           <AddArea onEnter={handleAddTask} />
 
-          {list.map((item, index)=>(
+          { loading && items.map((item)=>(
             <ListItem
-              key={index}
+              key={item.id}
               item={item}
               onChange={handleTaskChange}
             />
