@@ -6,15 +6,17 @@ import { Item } from '../types/Item';
 import { ListItem } from '../components/ListItem';
 import { AddArea } from '../components/AddArea';
 import axios from 'axios'
+import { useParams } from 'react-router-dom';
 
 const TodoPage = () => {
   const [todo, setTodo] = useState<Todo>();
   const [items, setItem] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const params = useParams()
 
   useEffect( () => {
     async function getItems(){
-      const response = await axios.get(`http://localhost:3000/todos/1`);
+      const response = await axios.get(`http://localhost:3000/todos/${params.id}`);
       debugger
       setTodo(response.data)
       setItem(response.data.items)
@@ -34,7 +36,7 @@ const TodoPage = () => {
       }
     }
 
-    const response = await axios.post(`http://localhost:3000/todos/1/items`, dto);
+    const response = await axios.post(`http://localhost:3000/todos/${params.id}/items`, dto);
 
     newList.push({
       id: response.data.id,
@@ -54,7 +56,7 @@ const TodoPage = () => {
       }
     }
 
-    const response = await axios.put(`http://localhost:3000/todos/1/items/${id}/done`, dto);
+    const response = await axios.put(`http://localhost:3000/todos/${params.id}/items/${id}/done`, dto);
 
     newList.find(item => {
       if (item.id === id){
