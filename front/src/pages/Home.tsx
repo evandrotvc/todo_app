@@ -3,7 +3,7 @@ import * as C from '../App.styles';
 import { useState, useEffect } from 'react';
 import { Todo } from '../types/todo';
 import { AddArea } from '../components/AddArea';
-import axios from 'axios'
+import api from '../services/index'
 import { ListTodo } from '../components/ListTodos';
 
 const Home = () => {
@@ -12,8 +12,8 @@ const Home = () => {
 
   useEffect( () => {
     async function getItems(){
-      const response = await axios.get(`http://localhost:3000/todos`);
-      debugger
+      const response = await api.get(`/todos`);
+
       setTodos(response.data.todos)
       setLoading(true)
     }
@@ -30,7 +30,7 @@ const Home = () => {
       }
     }
 
-    const response = await axios.post(`http://localhost:3000/todos/`, dto);
+    const response = await api.post(`/todos`, dto);
 
     newList.push({
       id: response.data.id,

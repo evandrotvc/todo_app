@@ -5,9 +5,10 @@ import { Todo } from '../types/todo';
 import { Item } from '../types/Item';
 import { ListItem } from '../components/ListItem';
 import { AddArea } from '../components/AddArea';
-import axios from 'axios'
+import api from '../services/index'
 import { useNavigate, useParams } from 'react-router-dom';
 import {FaArrowCircleLeft} from 'react-icons/fa'
+import { toast } from 'react-toastify'
 
 const TodoPage = () => {
   const [todo, setTodo] = useState<Todo>();
@@ -18,8 +19,8 @@ const TodoPage = () => {
 
   useEffect( () => {
     async function getItems(){
-      const response = await axios.get(`http://localhost:3000/todos/${params.id}`);
-      debugger
+      const response = await api.get(`/todos/${params.id}`);
+
       setTodo(response.data)
       setItem(response.data.items)
       setLoading(true)
@@ -38,13 +39,15 @@ const TodoPage = () => {
       }
     }
 
-    const response = await axios.post(`http://localhost:3000/todos/${params.id}/items`, dto);
+    const response = await api.post(`/todos/${params.id}/items`, dto);
 
     newList.push({
       id: response.data.id,
       description: response.data.description,
       done: false
     });
+
+    toast.success("task added!");
 
     setItem(newList);
   }
@@ -58,7 +61,7 @@ const TodoPage = () => {
       }
     }
 
-    const response = await axios.put(`http://localhost:3000/todos/${params.id}/items/${id}/done`, dto);
+    const response = await api.put(`/todos/${params.id}/items/${id}/done`, dto);
 
     newList.find(item => {
       if (item.id === id){
