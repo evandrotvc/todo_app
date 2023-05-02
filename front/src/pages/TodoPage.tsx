@@ -6,13 +6,15 @@ import { Item } from '../types/Item';
 import { ListItem } from '../components/ListItem';
 import { AddArea } from '../components/AddArea';
 import axios from 'axios'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import {FaArrowCircleLeft} from 'react-icons/fa'
 
 const TodoPage = () => {
   const [todo, setTodo] = useState<Todo>();
   const [items, setItem] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const params = useParams()
+  const params = useParams();
+  const navigate = useNavigate()
 
   useEffect( () => {
     async function getItems(){
@@ -68,9 +70,14 @@ const TodoPage = () => {
     setItem(newList);
   }
 
+  const handleClickBack = () => {
+    navigate('/')
+  }
+
   return (
     	<C.Container>
         <C.Area>
+          <FaArrowCircleLeft size={30} color='white' onClick={() => handleClickBack()}/>
           <C.Header>{todo?.title}</C.Header>
 
           <AddArea onEnter={handleAddTask} />
