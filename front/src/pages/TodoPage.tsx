@@ -75,6 +75,14 @@ const TodoPage = () => {
     navigate('/')
   }
 
+  const handleClickRemove = async (id: number) => {
+    await api.delete(`/todos/${params.id}/items/${id}/`);
+
+    const updatedTodos = items.filter(item => item.id !== id );
+
+    setItem(updatedTodos);
+  }
+
   return (
     	<C.Container>
         <C.Area>
@@ -93,6 +101,7 @@ const TodoPage = () => {
               key={item.id}
               item={item}
               onChange={handleTaskChange}
+              onClick={handleClickRemove}
             />
           ))}
 

@@ -12,6 +12,8 @@ export const Container = styled.div(({ done }: ContainerProps)=>(
     border-radius: 10px;
     margin-bottom: 10px;
     align-items: center;
+    justify-content: space-between;
+    
 
     input {
         width: 25px;
@@ -23,5 +25,19 @@ export const Container = styled.div(({ done }: ContainerProps)=>(
         color: #CCC;
         text-decoration: ${done ? 'line-through' : 'initial'};
     }
+
+    svg{
+        transition: 0.3s all;
+        cursor: pointer;
+
+        &:hover {
+            fill: red;
+        }
+    }
 `
 ));
+
+export const ContainerLabel = styled.div`
+    display: flex;
+    align-items: center;
+`;
