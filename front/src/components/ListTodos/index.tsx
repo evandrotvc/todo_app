@@ -1,5 +1,4 @@
 import * as C from './styles';
-import { Item } from '../../types/Item';
 import { Todo } from '../../types/todo';
 import {useNavigate} from 'react-router-dom'
 

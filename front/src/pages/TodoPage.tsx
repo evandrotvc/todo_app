@@ -53,24 +53,22 @@ const TodoPage = () => {
   }
 
   const handleTaskChange = async (id: number, done: boolean) => {
-    let newList = [...items];
-
     const dto = {
       item: {
         done: done
       }
     }
 
-    const response = await api.put(`/todos/${params.id}/items/${id}/done`, dto);
+    await api.put(`/todos/${params.id}/items/${id}/done`, dto);
 
-    newList.find(item => {
-      if (item.id === id){
-        item.done = done;
+    const updatedTodos = items.map(item => {
+      if (item.id === id) {
+        return { ...item, done: !item.done };
       }
       return item;
-    })
+    });
 
-    setItem(newList);
+    setItem(updatedTodos);
   }
 
   const handleClickBack = () => {
