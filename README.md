@@ -20,8 +20,19 @@ depois rode
 docker compose up
 ```
 
-Se tudo foi instalado com sucesso, estará rodando os containers postgres(port: 5432) e o server(port: 3000), redis.
+Se tudo foi instalado com sucesso, estará rodando os containers postgres(port: 5432) e o server(port: 3000).
 Agora é possível realizar os testes se todos os containers executaram corretamente
+
+
+Rodando o front, basta entrar na pasta /front, instalar as dependências e rodar
+```
+yarn
+```
+
+e depois rode
+```
+yarn start
+```
 
 ## Tests
 
