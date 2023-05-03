@@ -8,7 +8,7 @@ import { AddArea } from '../components/AddArea';
 import api from '../services/index'
 import { useNavigate, useParams } from 'react-router-dom';
 import {FaArrowCircleLeft} from 'react-icons/fa'
-import { toast } from 'react-toastify'
+import { addTaskRequest, changeTaskRequest, RemoveTaskRequest } from '../services/apiService';
 
 const TodoPage = () => {
   const [todo, setTodo] = useState<Todo>();
@@ -33,33 +33,19 @@ const TodoPage = () => {
   const handleAddTask = async (taskName: string) => {
     let newList = [...items];
 
-    const dto = {
-      item: {
-        description: taskName
-      }
-    }
-
-    const response = await api.post(`/todos/${params.id}/items`, dto);
+    const data = await addTaskRequest(params.id, taskName)
 
     newList.push({
-      id: response.data.id,
-      description: response.data.description,
+      id: data.id,
+      description: data.description,
       done: false
     });
-
-    toast.success("task added!");
 
     setItem(newList);
   }
 
   const handleTaskChange = async (id: number, done: boolean) => {
-    const dto = {
-      item: {
-        done: done
-      }
-    }
-
-    await api.put(`/todos/${params.id}/items/${id}/done`, dto);
+    await changeTaskRequest(params.id, id, done)
 
     const updatedTodos = items.map(item => {
       if (item.id === id) {
@@ -76,7 +62,7 @@ const TodoPage = () => {
   }
 
   const handleClickRemove = async (id: number) => {
-    await api.delete(`/todos/${params.id}/items/${id}/`);
+    await RemoveTaskRequest(params.id, id)
 
     const updatedTodos = items.filter(item => item.id !== id );
 
