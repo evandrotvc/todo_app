@@ -34,7 +34,7 @@ RSpec.describe ItemsController do
         post :create, params: { todo_id: todo.id, item: params }, as: :json
       end
 
-      it 'must to created document' do
+      it 'must to created item' do
         expect { do_request }.to change(Item, :count).by(1)
         expect(response).to have_http_status(:created)
         expect(todo.items.count).to eq(1)
@@ -55,7 +55,7 @@ RSpec.describe ItemsController do
         put :update, params: { todo_id: todo.id, id: item.id, item: params }, as: :json
       end
 
-      it 'must to created todo' do
+      it 'must to updated todo' do
         do_request
         expect do
           item.reload
@@ -79,11 +79,29 @@ RSpec.describe ItemsController do
         put :done, params: { todo_id: todo.id, id: item.id, item: params }, as: :json
       end
 
-      it 'must to created todo' do
+      it 'must changed status todo' do
         do_request
         expect do
           item.reload
         end.to change(item, :done).from(false).to(true)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
+
+  describe 'DELETE /destroy' do
+    context 'with valid parameters' do
+      let!(:item) { create(:item, description: 'study', todo:) }
+
+      let(:do_request) do
+        delete :destroy, params: { todo_id: todo.id, id: item.id }, as: :json
+      end
+
+      it 'must destroyed todo' do
+        expect do
+          do_request
+        end.to change(Item, :count).by(-1)
 
         expect(response).to have_http_status(:ok)
       end
