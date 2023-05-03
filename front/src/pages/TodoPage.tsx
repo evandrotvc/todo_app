@@ -78,12 +78,17 @@ const TodoPage = () => {
   return (
     	<C.Container>
         <C.Area>
-          <FaArrowCircleLeft size={30} color='white' onClick={() => handleClickBack()}/>
+          <C.IconBack>
+            <FaArrowCircleLeft size={30}
+            onClick={() => handleClickBack()}
+            color={'white'}
+          />
+          </C.IconBack>
           <C.Header>{todo?.title}</C.Header>
 
           <AddArea onEnter={handleAddTask} />
 
-          { loading && items.map((item)=>(
+          { loading && items.sort((a, b) => a.id - b.id).map((item)=>(
             <ListItem
               key={item.id}
               item={item}
