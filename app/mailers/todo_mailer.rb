@@ -5,6 +5,7 @@ class TodoMailer < ApplicationMailer
     @item = params[:item]
 
     mail(to: 'test@mail.com',
-      subject: I18n.t('activerecord.messages.todo.create.success', description: @item.description))
+      subject: I18n.t('activerecord.messages.todo.create.success',
+        description: @item.description))
   end
 end
