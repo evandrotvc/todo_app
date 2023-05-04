@@ -44,3 +44,13 @@ e depois:
 ```
 rspec
 ```
+
+## Exemplos
+
+### Examples
+- todo
+![alt text](https://github.com/evandrotvc/todo_app/blob/main/app/assets/images/todo.png)
+- items from todo
+![alt text](https://github.com/evandrotvc/todo_app/blob/main/app/assets/images/items.png)
+- CI Passed
+![alt text](https://github.com/evandrotvc/todo_app/blob/main/app/assets/images/ci.png)
