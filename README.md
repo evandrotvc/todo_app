@@ -38,7 +38,7 @@ yarn start
 
 No terminal, caso queira rodar os testes, basta entrar no container e rodar o comando a seguir.
 ```
-docker exec -it app bash
+docker exec -it todo bash
 ```
 e depois:
 ```
