@@ -1,0 +1,9 @@
+pt-BR:
+  activerecord:
+    messages:
+      todo:
+        create:
+          success: Task adicionada com sucesso!
+        update:
+          success: Task atualizada com sucesso!
+
