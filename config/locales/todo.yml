@@ -3,7 +3,7 @@ pt-BR:
     messages:
       todo:
         create:
-          success: Task adicionada com sucesso!
+          success: 'Task %{description} adicionada com sucesso!'
         update:
           success: Task atualizada com sucesso!
 
