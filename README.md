@@ -24,7 +24,7 @@ Se tudo foi instalado com sucesso, estará rodando os containers postgres(port: 
 Agora é possível realizar os testes se todos os containers executaram corretamente
 
 
-Rodando o front, basta entrar na pasta /front, instalar as dependências e rodar
+Rodando o front, basta entrar na pasta /front, instalar as dependências:
 ```
 yarn
 ```

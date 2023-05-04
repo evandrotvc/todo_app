@@ -38,7 +38,7 @@ RSpec.describe TodosController do
     end
   end
 
-  describe 'PUT /create' do
+  describe 'PUT /update' do
     context 'with valid parameters' do
       let!(:todo) { create(:todo, title: 'study') }
 
@@ -56,6 +56,24 @@ RSpec.describe TodosController do
         expect do
           todo.reload
         end.to change(todo, :title).from('study').to('read')
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
+
+  describe 'DELETE /destroy' do
+    context 'with valid parameters' do
+      let!(:todo) { create(:todo, title: 'study') }
+
+      let(:do_request) do
+        delete :destroy, params: { id: todo.id }, as: :json
+      end
+
+      it 'must destroyed todo' do
+        expect do
+          do_request
+        end.to change(Todo, :count).by(-1)
 
         expect(response).to have_http_status(:ok)
       end
