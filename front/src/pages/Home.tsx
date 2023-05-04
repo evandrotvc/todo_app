@@ -3,8 +3,8 @@ import * as C from '../App.styles';
 import { useState, useEffect } from 'react';
 import { Todo } from '../types/todo';
 import { AddArea } from '../components/AddArea';
-import api from '../services/index'
 import { ListTodo } from '../components/ListTodos';
+import { getTodosRequest, addTodoRequest } from '../services/apiService';
 
 const Home = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -12,9 +12,9 @@ const Home = () => {
 
   useEffect( () => {
     async function getItems(){
-      const response = await api.get(`/todos`);
+      const listTodos = await getTodosRequest();
 
-      setTodos(response.data.todos)
+      setTodos(listTodos.todos)
       setLoading(true)
     }
 
@@ -24,17 +24,11 @@ const Home = () => {
   const handleAddTask = async (todoName: string) => {
     let newList = [...todos];
 
-    const dto = {
-      todo: {
-        title: todoName
-      }
-    }
-
-    const response = await api.post(`/todos`, dto);
+    const todo = await addTodoRequest(todoName);
 
     newList.push({
-      id: response.data.id,
-      title: response.data.title,
+      id: todo.id,
+      title: todo.title,
       items: []
     });
 

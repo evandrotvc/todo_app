@@ -1,6 +1,33 @@
 import api from './index'
 import { toast } from 'react-toastify'
 
+export async function getTodosRequest(){
+  try {
+    const response = await api.get(`/todos`);
+
+    return response.data;
+  } catch (error) {
+    toast.error(`Error Server ${error}`);
+  }
+}
+
+export async function addTodoRequest(todoName: string){
+  try {
+
+    const dto = {
+      todo: {
+        title: todoName
+      }
+    }
+
+    const response = await api.post(`/todos`, dto);
+
+    return response.data;
+  } catch (error) {
+    toast.error(`Error Server ${error}`);
+  }
+}
+
 export async function addTaskRequest(id: string | undefined, taskName: string)
 {
   if (id === undefined) return toast.error("Todo id is blank");
