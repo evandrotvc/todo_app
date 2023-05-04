@@ -5,6 +5,8 @@ class CreateItem < ActiveRecord::Migration[7.0]
       t.boolean :done, default: false
       t.references :todo, foreign_key: true, index: true
 
+      t.index %i[todo_id description], unique: true
+
       t.timestamps
     end
   end

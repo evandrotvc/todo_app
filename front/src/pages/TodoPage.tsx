@@ -82,7 +82,19 @@ const TodoPage = () => {
 
           <AddArea onEnter={handleAddTask} />
 
-          { loading && items.sort((a, b) => a.id - b.id).map((item)=>(
+          <h2>Pending</h2>
+          { loading && items.filter(item => item.done === false).map((item)=>(
+            <ListItem
+              key={item.id}
+              item={item}
+              onChange={handleTaskChange}
+              onClick={handleClickRemove}
+            />
+          ))}
+
+          <h2>Done</h2>
+
+          { loading && items.filter(item => item.done === true).map((item)=>(
             <ListItem
               key={item.id}
               item={item}

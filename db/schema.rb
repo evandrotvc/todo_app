@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_01_131533) do
     t.bigint "todo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["todo_id", "description"], name: "index_items_on_todo_id_and_description", unique: true
     t.index ["todo_id"], name: "index_items_on_todo_id"
   end
 
